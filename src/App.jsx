@@ -1,15 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import Login from './pages/Login'
-
-// Placeholder — will be replaced with the real dashboard
-function Dashboard() {
-  return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <p className="text-gray-500 text-lg">Dashboard coming soon…</p>
-    </div>
-  )
-}
+import Dashboard from './pages/Dashboard'
 
 // Redirects to login if not signed in
 function PrivateRoute({ children }) {
