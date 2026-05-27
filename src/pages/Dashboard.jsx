@@ -57,7 +57,7 @@ export default function Dashboard() {
           </div>
           <div className="text-center">
             <p className="text-xs text-gray-400 mb-0.5">Remaining</p>
-            <p className={`font-semibold ${totalRemaining < 0 ? 'text-red-500' : 'text-green-600'}`}>
+            <p className={`font-semibold ${totalRemaining < 0 ? 'text-red-500' : 'text-indigo-600'}`}>
               ${totalRemaining.toFixed(2)}
             </p>
           </div>
@@ -75,7 +75,7 @@ export default function Dashboard() {
       <div className="fixed bottom-6 right-4 left-4">
         <button
           onClick={() => navigate('/add-transaction')}
-          className="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold py-4 rounded-2xl shadow-lg transition-colors text-base"
+          className="w-full bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-semibold py-4 rounded-2xl shadow-lg transition-colors text-base"
         >
           + Add Transaction
         </button>

@@ -4,8 +4,8 @@ function getBarColor(spent, budgeted) {
   const percentSpent = spent / budgeted
   if (percentSpent >= 1) return 'bg-red-500'
   if (percentSpent >= 0.75) return 'bg-red-500'
-  if (percentSpent >= 0.5) return 'bg-yellow-400'
-  return 'bg-green-500'
+  if (percentSpent >= 0.5) return 'bg-amber-400'
+  return 'bg-blue-500'
 }
 
 export default function CategoryCard({ category }) {
