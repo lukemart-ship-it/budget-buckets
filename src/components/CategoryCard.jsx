@@ -19,7 +19,7 @@ export default function CategoryCard({ category }) {
   return (
     <button
       onClick={() => navigate(`/category/${id}`)}
-      className="w-full bg-white rounded-xl border border-gray-200 p-4 text-left active:bg-gray-50 transition-colors"
+      className="w-full bg-white rounded-xl border border-slate-200 p-4 text-left shadow-sm active:bg-slate-50 transition-colors"
     >
       {/* Top row: name + remaining amount */}
       <div className="flex justify-between items-baseline mb-3">
