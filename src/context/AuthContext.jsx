@@ -5,17 +5,18 @@ import { auth } from '../lib/firebase'
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(undefined) // undefined = still loading
+  const [user, setUser]               = useState(undefined) // undefined = still loading
+  const [displayName, setDisplayName] = useState(undefined)
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+    return onAuthStateChanged(auth, firebaseUser => {
       setUser(firebaseUser)
+      setDisplayName(firebaseUser?.displayName ?? null)
     })
-    return unsubscribe
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user }}>
+    <AuthContext.Provider value={{ user, displayName, setDisplayName }}>
       {children}
     </AuthContext.Provider>
   )
