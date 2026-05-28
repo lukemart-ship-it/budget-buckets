@@ -1,7 +1,8 @@
 import { db } from './firebase'
 import {
   collection, doc, addDoc, updateDoc, deleteDoc,
-  query, orderBy, limit, serverTimestamp, onSnapshot,
+  query, orderBy, limit, where, serverTimestamp,
+  onSnapshot, getDocs, writeBatch,
 } from 'firebase/firestore'
 
 // --- Months ---
@@ -80,4 +81,28 @@ export async function addTransaction(monthId, { categoryId, amount, createdBy, n
 
 export async function deleteTransaction(monthId, transactionId) {
   return deleteDoc(doc(db, 'months', monthId, 'transactions', transactionId))
+}
+
+// Deletes a category and all its transactions in one batch
+export async function deleteCategoryWithTransactions(monthId, categoryId) {
+  const txnSnap = await getDocs(
+    query(collection(db, 'months', monthId, 'transactions'), where('categoryId', '==', categoryId))
+  )
+  const batch = writeBatch(db)
+  txnSnap.docs.forEach(d => batch.delete(d.ref))
+  batch.delete(doc(db, 'months', monthId, 'categories', categoryId))
+  return batch.commit()
+}
+
+// Deletes a month and everything under it (categories + transactions) in one batch
+export async function deleteMonthWithAll(monthId) {
+  const [catSnap, txnSnap] = await Promise.all([
+    getDocs(collection(db, 'months', monthId, 'categories')),
+    getDocs(collection(db, 'months', monthId, 'transactions')),
+  ])
+  const batch = writeBatch(db)
+  catSnap.docs.forEach(d => batch.delete(d.ref))
+  txnSnap.docs.forEach(d => batch.delete(d.ref))
+  batch.delete(doc(db, 'months', monthId))
+  return batch.commit()
 }
